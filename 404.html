@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="format-detection" content="telephone=no" />
   <meta name="robots" content="noindex,nofollow" />
-  <title>B2B CRM Terraeco — воронка и аналитика</title>
+  <title>B2B CRM Terraeco — логичная воронка</title>
   <style>
     :root{
       --bg:#f4f7fb;
@@ -170,6 +170,28 @@
     .category-result{margin-top:8px;display:grid;grid-template-columns:180px 1fr;gap:8px;align-items:center}.category-result label{font-size:11px;font-weight:900;color:#64748b}.category-result select{border:1px solid var(--border);border-radius:10px;padding:8px;background:#fff;font-weight:800;color:#334155}
     @media(max-width:700px){.category-row-head{grid-template-columns:34px 1fr}.category-row-head .priority{grid-column:2}.category-notes{grid-template-columns:1fr}.category-result{grid-template-columns:1fr}.category-actions{display:grid;grid-template-columns:1fr 1fr}.category-actions button,.category-actions a{justify-content:center}}
 
+  
+    /* Чистая верхняя часть: оставляем только рабочие кнопки и аналитику */
+    header{padding:12px 18px 10px}
+    .subtitle{display:none}
+    .topline{gap:10px}
+    .header-actions{gap:7px}
+    .header-actions button{padding:8px 10px;border-radius:11px;font-size:12px}
+    main{padding-top:10px}
+    .stats{margin:8px 0 12px;grid-template-columns:repeat(6,minmax(120px,1fr))}
+    .stat{padding:10px 12px;border-radius:14px}
+    .stat .n{font-size:24px}
+    .panel.clean-panel>p{display:none}
+    .extra-tools{margin-top:14px}
+    .extra-tools summary{cursor:pointer;font-weight:950;font-size:16px;color:#1f2937;list-style:none}
+    .extra-tools summary::-webkit-details-marker{display:none}
+    .extra-tools summary:after{content:' раскрыть';font-size:12px;color:var(--muted);font-weight:800;margin-left:8px}
+    .extra-tools[open] summary:after{content:' свернуть'}
+    .importance-note{font-size:12px;color:var(--muted);font-weight:800;margin:6px 0 0}
+    .donut-center em{white-space:pre-line}
+    .summary-donut-center em{white-space:pre-line}
+    @media(max-width:900px){.stats{grid-template-columns:repeat(2,minmax(120px,1fr))}.header-actions button{font-size:11px;padding:7px 8px}.analytics-grid{grid-template-columns:1fr}.main-analytics{grid-template-columns:1fr}}
+
   </style>
 </head>
 <body>
@@ -177,7 +199,7 @@
   <div class="topline">
     <div>
       <h1>B2B CRM Terraeco / Multibac</h1>
-      <div class="subtitle">Воронка продаж: карточки клиентов, статусы, звонки, письма, подходящие КП, ссылки и качественные лиды для сбыта</div>
+
     </div>
     <div class="header-actions">
       <button class="call-top-btn" onclick="openCallModal()">☎️ Надо звонить <span id="callBadgeTop" class="call-count-pill">0</span></button>
@@ -201,21 +223,38 @@
 <main>
   <section class="stats" id="stats"></section>
 
-  <section class="panel" id="mainAnalyticsPanel">
-    <h2>📌 Общая картина продаж</h2>
+  <section class="panel clean-panel" id="mainAnalyticsPanel">
+    <h2>📌 Главное по продажам</h2>
     <p>Здесь видно главное: кто в работе, кто отказался, сколько написали, сколько КП/форм, сколько обзвонили и кому ещё нужно позвонить.</p>
     <div id="mainAnalytics"></div>
   </section>
 
 
-  <section class="panel">
+  <section class="panel clean-panel">
     <h2>📊 Статистика по направлениям</h2>
     <p>Кликни на любую строку внутри блока: откроется список компаний по этому показателю. Строка «КП / форма» покажет тех, кому уже отправлено КП или заполнена форма на сайте.</p>
     <div class="analytics-grid" id="segmentStats"></div>
   </section>
 
 
-  <section class="panel quick-block">
+  <div class="importance-note">Карточки внутри колонок отсортированы по важности: интерес → надо звонить → повтор → КП/форма → новые → закрытые.</div>
+  <section class="board-wrap">
+    <div class="board" id="board"></div>
+  </section>
+
+  <section class="panel clean-panel">
+    <h2>Фильтр по направлению</h2>
+    <div class="filters" id="filters"></div>
+  </section>
+
+  <section class="panel clean-panel">
+    <h2>📋 Удобные списки для обзвона по категориям</h2>
+    <p>Открывай направление списком: номер, название, сайт, телефон, статусы, моментальный комментарий и поле «что узнали».</p>
+    <div class="category-list-buttons" id="categoryListButtons"></div>
+  </section>
+
+
+  <details class="panel extra-tools"><summary>✉️ Письма и скрипты</summary><div class="quick-block">
     <div>
       <h2>Письмо по септикам</h2>
       <p>Копируй текст для новых лидов или при повторной отправке.</p>
@@ -245,22 +284,9 @@
 Подскажите, пожалуйста, кто у вас отвечает за закупку или рассмотрение новых товаров? Хотим направить актуальное КП и понять, какое направление вам подходит.</textarea>
       <button class="btn-blue" onclick="copyValue('callText')">Скопировать скрипт</button>
     </div>
-  </section>
+  </div></details>
 
-  <section class="panel">
-    <h2>Фильтр по направлению</h2>
-    <div class="filters" id="filters"></div>
-  </section>
 
-  <section class="panel">
-    <h2>📋 Удобные списки для обзвона по категориям</h2>
-    <p>Открывай направление списком: номер, название, сайт, телефон, статусы, моментальный комментарий и поле «что узнали».</p>
-    <div class="category-list-buttons" id="categoryListButtons"></div>
-  </section>
-
-  <section class="board-wrap">
-    <div class="board" id="board"></div>
-  </section>
 
   <!-- Карточки контактов перенесены вниз страницы по просьбе пользователя -->
   <section class="panel mobile-data-panel">
@@ -2978,6 +3004,39 @@ function normalizeLeadName(name){
     [/^maximum$/,'maximum tools'],
     [/^максимум$/,'maximum tools']
   ];
+  const manualAliases = [
+    [/^садхосторг.*$/,'садхозторг'],
+    [/^садхозторг.*$/,'садхозторг'],
+    [/^уралхозторг.*$/,'садхозторг'],
+    [/^уралхозторг\s+садхозторг.*$/,'садхозторг'],
+    [/^садхозторг\s+уралхозторг.*$/,'садхозторг'],
+    [/^гала\s*центр.*$/,'гала центр'],
+    [/^сима\s*ленд.*$/,'сима ленд'],
+    [/^садовод\s+ясенево.*$/,'садовод ясенево'],
+    [/^садовый\s+центр\s+мсха.*$/,'садовый центр мсха'],
+    [/^garden\s+house.*$/,'garden house'],
+    [/^df\s*огород.*$/,'dfogorod'],
+    [/^dfогород.*$/,'dfogorod'],
+    [/^навоком.*$/,'навоком'],
+    [/^navokom.*$/,'навоком'],
+    [/^maximum\s*tools.*$/,'maximum tools'],
+    [/^хозтовары\s*ру.*$/,'хозтовары ру'],
+    [/^hoztovary.*$/,'хозтовары ру'],
+    [/^xoztovari.*$/,'хозтовары ру'],
+    [/^хозабсолют.*$/,'хозабсолют'],
+    [/^септик\s*маркет.*$/,'септик маркет'],
+    [/^септик\s*макет.*$/,'септик маркет'],
+    [/^septik\s*shop.*$/,'septik shop'],
+    [/^septik-shop.*$/,'septik shop'],
+    [/^septikcity.*$/,'septikcity'],
+    [/^septikoff.*$/,'septikoff'],
+    [/^akva\s*septik.*$/,'akva septik'],
+    [/^akva-septik.*$/,'akva septik'],
+    [/^sad\.ru.*$/,'sad ru'],
+    [/^letto.*$/,'letto'],
+    [/^sunoptom.*$/,'sunoptom']
+  ];
+  manualAliases.forEach(pair=>{ if(pair[0].test(s)) s=pair[1]; });
   aliases.forEach(pair=>{ if(pair[0].test(s)) s=pair[1]; });
 
   s = s
@@ -3045,6 +3104,68 @@ function allLeads(){
   });
   // Финальная страховка: возвращаем только по одному лиду на нормализованное название/почту/сайт.
   return Array.from(map.values()).sort((a,b)=>normalizeLeadName(a.company).localeCompare(normalizeLeadName(b.company),'ru'));
+}
+function leadDedupeKey(l){
+  return normalizeLeadName(l.company) || canonicalEmail(l.email) || canonicalSite(l.site) || String(l.id||'');
+}
+function dedupeLeadList(list){
+  const map=new Map();
+  (list||[]).forEach(l=>{
+    const key=leadDedupeKey(l);
+    if(!key) return;
+    if(!map.has(key)){ map.set(key,l); return; }
+    const ex=map.get(key);
+    // Если вдруг пришёл дубль, оставляем более важную/заполненную карточку.
+    if(staticLeadScore(l) < staticLeadScore(ex)) map.set(key,l);
+  });
+  return Array.from(map.values());
+}
+function staticLeadScore(l){
+  let score=100;
+  const pr=String(l.priority||'');
+  if(pr.includes('A')) score-=30;
+  if(pr.includes('B')) score-=10;
+  if(l.email) score-=8;
+  if(l.phone) score-=6;
+  if(l.site) score-=4;
+  if(String(l.direction||'').includes('Лиды от руководства')) score-=25;
+  return score;
+}
+function sortLeadsByImportance(list){
+  return dedupeLeadList(list).sort((a,b)=>leadImportanceScore(a)-leadImportanceScore(b) || String(a.company||'').localeCompare(String(b.company||''),'ru'));
+}
+function leadImportanceScore(l){
+  const s=(state&&state[l.id])?state[l.id]:{tasks:{},interest:'Нет данных',nextCall:''};
+  const t=s.tasks||{};
+  let score=1000;
+  if(['В переговорах','Запросили прайс'].includes(s.interest)) score=0;
+  else if(s.interest==='Интересно') score=20;
+  else if(leadNeedsCall(l)) score=40;
+  else if(getStage(l)==='follow') score=70;
+  else if(getStage(l)==='sent') score=90;
+  else if(getStage(l)==='new') score=130;
+  else if(getStage(l)==='issue') score=180;
+  else if(getStage(l)==='closed') score=260;
+  const pr=priorityInfo(l).cls;
+  if(pr==='p1') score-=25;
+  if(pr==='p2') score-=15;
+  if(l.email) score-=4;
+  if(l.phone) score-=3;
+  const d=s.nextCall||l.nextCall||'';
+  if(d) score+=Math.min(30, Math.max(0, d.localeCompare(todayISO())<0 ? 0 : 8));
+  return score;
+}
+function leadNeedsCall(l){
+  const s=state[l.id] || {tasks:{},interest:'Нет данных'};
+  const t=s.tasks||{};
+  if(s.interest==='Не интересно' || s.interest==='Email не работает') return false;
+  const needsInitialCall = (t.kp==='done' || t.form==='done') && t.call!=='done';
+  const needsByInterest = ['Перезвонить','Не дозвонилась','Запросили прайс','В переговорах'].includes(s.interest);
+  const due = isDueDate(s.nextCall);
+  return needsInitialCall || needsByInterest || due;
+}
+function getCallLeadsRaw(){
+  return allLeads().filter(leadNeedsCall);
 }
 function openLeadModal(){document.getElementById('leadModal').classList.add('open');setTimeout(()=>document.getElementById('leadCompany').focus(),50)}
 function closeLeadModal(){document.getElementById('leadModal').classList.remove('open')}
@@ -3223,7 +3344,7 @@ function getStage(lead){
   if(contactDone) return 'sent';
   return 'new';
 }
-function filteredLeads(){return allLeads().filter(l=>currentFilter==='Все'||String(l.direction||'').includes(currentFilter));}
+function filteredLeads(){return sortLeadsByImportance(allLeads().filter(l=>currentFilter==='Все'||String(l.direction||'').includes(currentFilter)));}
 let mobileMode = 'all';
 function render(){renderStats();renderMainAnalytics();renderSegmentStats();renderFilters();renderCategoryButtons();renderToday();renderBoard();renderMobileCards();}
 
@@ -3317,7 +3438,7 @@ function renderMainAnalytics(){
 }
 function openStageList(stageId){
   const labels={new:'Новые / написать',sent:'КП отправлено',call:'Надо позвонить',follow:'Повтор / дожим',interest:'Интерес есть',closed:'Нет интереса / закрыто',issue:'Проблема с email'};
-  const list=stageId==='call'?filteredCallLeads():filteredLeads().filter(l=>getStage(l)===stageId);
+  const list=sortLeadsByImportance(stageId==='call'?filteredCallLeads():filteredLeads().filter(l=>getStage(l)===stageId));
   document.getElementById('segmentModalTitle').textContent=`${labels[stageId]||'Стадия'} — ${list.length}`;
   document.getElementById('segmentModalHint').innerHTML= stageId==='call' ? 'Компании, по которым нужно сделать звонок сейчас или по дате следующего контакта.' : 'Компании на выбранной стадии воронки. В карточке видны статус, действия и комментарии.';
   const box=document.getElementById('segmentList');
@@ -3402,6 +3523,7 @@ function openTopStatList(metric){
   document.getElementById('segmentModalHint').innerHTML=`${hint}<br><b>Найдено:</b> ${list.length}`;
   const box=document.getElementById('segmentList');
   if(!list.length){box.innerHTML='<div class="empty">Сейчас здесь пусто.</div>'; document.getElementById('segmentModal').classList.add('open'); return;}
+  list=sortLeadsByImportance(list);
   box.innerHTML=list.map(l=>renderContactMiniCard(l, metric)).join('');
   document.getElementById('segmentModal').classList.add('open');
 }
@@ -3477,7 +3599,7 @@ function metricFilter(l, metric){
   if(metric==='form') return s.tasks.form==='done';
   if(metric==='sent') return s.tasks.kp==='done' || s.tasks.form==='done';
   if(metric==='called') return s.tasks.call==='done';
-  if(metric==='needcall') return getCallLeads().some(x=>x.id===l.id);
+  if(metric==='needcall') return leadNeedsCall(l);
   if(metric==='hot') return ['Интересно','Запросили прайс','В переговорах'].includes(s.interest);
   if(metric==='not_interest') return s.interest==='Не интересно';
   if(metric==='issue') return isIssueLead(l);
@@ -3526,7 +3648,7 @@ function renderSegmentStats(){
     const bg=`conic-gradient(var(--red) 0deg ${dRed}deg, #7c3aed ${dRed}deg ${dPurple}deg, var(--green) ${dPurple}deg ${dGreen}deg, var(--orange) ${dGreen}deg ${dOrange}deg, var(--blue) ${dOrange}deg ${dBlue}deg, var(--yellow) ${dBlue}deg ${dYellow}deg, #e5e7eb ${dYellow}deg 360deg)`;
     return `<div class="segment-card">
       <div class="segment-head"><div><div class="segment-title">${g.title}</div><div class="segment-sub">${g.sub}</div></div><span class="badge">${total}</span></div>
-      <div class="donut" style="background:${bg}" title="ОК/интерес: ${hot}; надо звонить: ${needCall}; КП/форма: ${sent}; не интересно: ${notInterested}"><div class="donut-center"><b>${total}</b><span>лидов</span><em>${hot} ок / ${notInterested} нет</em></div></div>
+      <div class="donut" style="background:${bg}" title="ОК/интерес: ${hot}; надо звонить: ${needCall}; КП/форма: ${sent}; написали: ${written}; не интересно: ${notInterested}; проблемы: ${issues}; новые/прочее: ${bucket.other}"><div class="donut-center"><b>${total}</b><span>лидов</span><em>${hot} ок · ${needCall} звон\n${notInterested} отказ</em></div></div>
       <div class="metric-list">
         <div class="metric-row total" onclick="openSegmentList('${g.id}','total')"><span>Всего клиентов</span><b>${total}</b></div>
         <div class="metric-row written" onclick="openSegmentList('${g.id}','written')"><span>Написали</span><b>${written}</b></div>
@@ -3544,7 +3666,7 @@ function renderSegmentStats(){
 }
 function openSegmentList(group, metric){
   const names={total:'все клиенты',written:'кому написали',kp:'КП отправлено',form:'форма заполнена',sent:'кому отправлено КП или заполнена форма',called:'кому уже позвонили',needcall:'кому надо позвонить',hot:'интерес есть',priority:'приоритетные лиды',newstage:'новые / без действия',issue:'проблемы / email',not_interest:'кому не интересно'};
-  const leads=segmentLeads(group).filter(l=>metricFilter(l,metric));
+  const leads=sortLeadsByImportance(segmentLeads(group).filter(l=>metricFilter(l,metric)));
   document.getElementById('segmentModalTitle').textContent=`${group}: ${names[metric]||'список'}`;
   document.getElementById('segmentModalHint').textContent= metric==='sent' ? 'Здесь компании, где уже отмечено «КП отправлено» или «Форма / заявка».' : (metric==='needcall' ? 'Здесь компании, по которым нужен звонок или повторный контакт.' : (metric==='hot' ? 'Здесь компании с интересом: их лучше дожимать в первую очередь.' : (metric==='issue' ? 'Здесь проблемы по email или контактам.' : (metric==='not_interest' ? 'Здесь компании, где отмечено «Не интересно». Смотри комментарии, чтобы понимать причину.' : 'Нажми сайт, телефон или email, чтобы быстро перейти к действию.'))));
   const box=document.getElementById('segmentList');
@@ -3598,19 +3720,13 @@ function callReason(lead){
   return 'Нужен контакт';
 }
 function getCallLeads(){
-  return allLeads().filter(l=>{
-    const s=state[l.id] || {tasks:{},interest:'Нет данных'};
-    if(s.interest==='Не интересно' || s.interest==='Email не работает') return false;
-    const needsInitialCall = (s.tasks.kp==='done' || s.tasks.form==='done') && s.tasks.call!=='done';
-    const needsByInterest = ['Перезвонить','Не дозвонилась','Запросили прайс','В переговорах'].includes(s.interest);
-    const due = isDueDate(s.nextCall);
-    return needsInitialCall || needsByInterest || due;
-  }).sort((a,b)=>{
+  return sortLeadsByImportance(getCallLeadsRaw()).sort((a,b)=>{
     const sa=state[a.id]||{}, sb=state[b.id]||{};
     const da=sa.nextCall||'9999-99-99', db=sb.nextCall||'9999-99-99';
-    return da.localeCompare(db) || a.company.localeCompare(b.company,'ru');
+    return da.localeCompare(db) || leadImportanceScore(a)-leadImportanceScore(b) || String(a.company||'').localeCompare(String(b.company||''),'ru');
   });
 }
+
 function openCallModal(){renderCallList();document.getElementById('callModal').classList.add('open');}
 function closeCallModal(){document.getElementById('callModal').classList.remove('open');}
 function closeCallModalByBg(e){if(e.target && e.target.id==='callModal') closeCallModal();}
@@ -3663,7 +3779,7 @@ function getMobileLeadList(){
   if(q){
     list = list.filter(l => [l.company,l.email,l.phone,l.direction,l.type,l.offer,l.who,(state[l.id]||{}).comment,(state[l.id]||{}).interest].join(' ').toLowerCase().includes(q));
   }
-  return list;
+  return sortLeadsByImportance(list);
 }
 function renderMobileCards(){
   const box=document.getElementById('mobileCards');
@@ -3705,7 +3821,7 @@ function renderBoard(){
   const leads=filteredLeads();
   document.getElementById('board').innerHTML=columns.map(col=>{
     // Важно: карточка показывается только в одной колонке. Дублей между «Позвонить» и «Повтор / дожим» нет.
-    const colLeads=leads.filter(l=>getStage(l)===col.id);
+    const colLeads=sortLeadsByImportance(leads.filter(l=>getStage(l)===col.id));
     return `<section class="col"><div class="col-title"><h3>${col.title}</h3><div class="col-tools"><span class="badge">${colLeads.length}</span>${columnAddButton(col.id)}</div></div>${colLeads.length?colLeads.map(cardHTML).join(''):'<div class="empty">Пока пусто</div>'}</section>`;
   }).join('');
 }
@@ -4173,6 +4289,279 @@ function stepBackCategoryLead(id){stepBackLead(id); if(currentCategoryKey) openC
 function setInterestFromCategory(id,v){setInterest(id,v); if(currentCategoryKey) openCategoryList(currentCategoryKey);}
 function setMomentComment(id,val){if(!state[id]) return; state[id].momentComment=val; state[id].comment=val; saveState(); renderMobileCards();}
 function setLearned(id,val){if(!state[id]) return; state[id].learned=val; saveState();}
+
+
+
+/* ===== CRM LOGIC v25: единая логика кнопок и статусов =====
+   Все кнопки работают через одну модель:
+   действие -> связанные поля -> этап воронки -> статистика -> списки -> карточки.
+*/
+const CRM_LOGIC_VERSION = 'v25-linked-buttons';
+function defaultLeadState(lead){
+  return {
+    tasks:Object.assign({write:'open',kp:'open',form:'open',call:'open',follow:'open'}, (lead&&lead.defaults)||{}),
+    interest:(lead&&lead.interest)||'Нет данных',
+    comment:(lead&&lead.comment)||'',
+    nextCall:(lead&&lead.nextCall)||'',
+    momentComment:'',
+    learned:'',
+    _history:[]
+  };
+}
+function cleanTaskValue(v){return (v==='done'||v==='fail'||v==='open')?v:'open';}
+function ensureLeadState(id){
+  if(!state[id]){
+    const lead = allLeads().find(x=>x.id===id) || {id};
+    state[id] = defaultLeadState(lead);
+  }
+  const s = state[id];
+  s.tasks = Object.assign({write:'open',kp:'open',form:'open',call:'open',follow:'open'}, s.tasks||{});
+  Object.keys(taskNames).forEach(k=>s.tasks[k]=cleanTaskValue(s.tasks[k]));
+  s.interest = s.interest || 'Нет данных';
+  s.comment = s.comment || '';
+  s.nextCall = s.nextCall || '';
+  if(!Array.isArray(s._history)) s._history=[];
+  return s;
+}
+function cloneStateForHistory(s){
+  return JSON.parse(JSON.stringify({tasks:s.tasks, interest:s.interest, comment:s.comment||'', nextCall:s.nextCall||'', momentComment:s.momentComment||'', learned:s.learned||''}));
+}
+function pushLeadHistory(id){
+  const s=ensureLeadState(id);
+  s._history=s._history||[];
+  s._history.push(cloneStateForHistory(s));
+  if(s._history.length>20) s._history=s._history.slice(-20);
+}
+function restoreLeadSnapshot(id,snap){
+  const s=ensureLeadState(id);
+  s.tasks=Object.assign({write:'open',kp:'open',form:'open',call:'open',follow:'open'}, snap.tasks||{});
+  s.interest=snap.interest||'Нет данных';
+  s.comment=snap.comment||'';
+  s.nextCall=snap.nextCall||'';
+  s.momentComment=snap.momentComment||'';
+  s.learned=snap.learned||'';
+  normalizeLeadState(id,false);
+}
+function isPositiveInterest(int){return ['Интересно','Запросили прайс','В переговорах'].includes(int||'');}
+function isCallBackInterest(int){return ['Перезвонить','Не дозвонилась'].includes(int||'');}
+function normalizeLeadState(id, keepHistory=true){
+  const s=ensureLeadState(id), t=s.tasks;
+  // Базовая связка действий: КП и форма — это уже контакт, значит «написали» тоже готово.
+  if(t.kp==='done' || t.form==='done') t.write='done';
+  // Ошибка email не должна уживаться с успешным КП. Если КП/форма отправлены, снимаем email-ошибку.
+  if((t.kp==='done' || t.form==='done') && s.interest==='Email не работает') s.interest='Нет данных';
+  // Ошибка отправки письма/КП переводит в проблему, но не ломает уже успешные задачи.
+  if((t.write==='fail' || t.kp==='fail') && t.kp!=='done' && t.form!=='done') s.interest='Email не работает';
+  if(s.interest==='Email не работает'){
+    if(t.write!=='done') t.write='fail';
+    if(t.kp!=='done') t.kp='fail';
+    s.nextCall=s.nextCall || '';
+  }
+  // Отказ закрывает будущий звонок и дожим, но сохраняет историю: КП/письмо/звонок остаются отмеченными.
+  if(s.interest==='Не интересно'){
+    s.nextCall='';
+    t.follow='open';
+  }
+  // Положительный интерес убирает конфликтующие технические/негативные статусы и оставляет следующий контакт.
+  if(isPositiveInterest(s.interest)){
+    if(!s.nextCall && s.interest!=='Нет данных') s.nextCall=tomorrowISO();
+  }
+  // Повтор/перезвон — отдельная логика: ставим дату и держим лид в дожиме/звонках, не превращая его в отказ.
+  if(t.follow==='done' && !s.nextCall && !['Не интересно','Email не работает'].includes(s.interest)){
+    s.interest = isPositiveInterest(s.interest) ? s.interest : 'Перезвонить';
+    s.nextCall = tomorrowISO();
+  }
+  if(isCallBackInterest(s.interest) && !s.nextCall) s.nextCall=tomorrowISO();
+  // Если звонок сделан успешно, ближайшая дата звонка закрывается. Для дожима дату ставит «Повтор».
+  if(t.call==='done' && !isPositiveInterest(s.interest) && !isCallBackInterest(s.interest) && s.interest!=='Не интересно'){
+    s.nextCall='';
+  }
+  return s;
+}
+function normalizeAllStates(st){
+  const ids=new Set(allLeads().map(l=>l.id));
+  ids.forEach(id=>{ if(!st[id]) st[id]=defaultLeadState(allLeads().find(l=>l.id===id)); normalizeLeadState(id,false); });
+  return st;
+}
+function linkedSaveAndRender(extraRender){
+  normalizeAllStates(state);
+  saveState();
+  render();
+  if(typeof extraRender==='function') extraRender();
+}
+function applyLeadTransition(id, action, value, options={}){
+  const s=ensureLeadState(id);
+  pushLeadHistory(id);
+  const t=s.tasks;
+  if(action==='task'){
+    const k=value.key, val=value.val;
+    const current=t[k]||'open';
+    const next=current===val?'open':val;
+    t[k]=next;
+    if(k==='kp' && next==='done'){t.write='done'; if(s.interest==='Email не работает') s.interest='Нет данных';}
+    if(k==='form' && next==='done'){t.write='done'; if(s.interest==='Email не работает') s.interest='Нет данных';}
+    if(k==='write' && next==='fail' && t.kp!=='done' && t.form!=='done') s.interest='Email не работает';
+    if(k==='kp' && next==='fail' && t.form!=='done') s.interest='Email не работает';
+    if(k==='call' && next==='done'){s.nextCall='';}
+    if(k==='call' && next==='fail'){s.interest='Не дозвонилась'; s.nextCall=tomorrowISO();}
+    if(k==='follow' && next==='done'){s.interest=isPositiveInterest(s.interest)?s.interest:'Перезвонить'; s.nextCall=s.nextCall||tomorrowISO();}
+  }
+  if(action==='quick'){
+    const target=value;
+    if(target==='write') t.write='done';
+    if(target==='kp'){t.write='done';t.kp='done'; if(s.interest==='Email не работает') s.interest='Нет данных';}
+    if(target==='form'){t.write='done';t.form='done'; if(s.interest==='Email не работает') s.interest='Нет данных';}
+    if(target==='call'){t.call='done';s.nextCall='';}
+    if(target==='needcall'){
+      // Важное изменение: «Надо звонить» больше не подделывает КП. Это только звонок/дата.
+      t.call='open';
+      s.interest=isPositiveInterest(s.interest)?s.interest:'Перезвонить';
+      s.nextCall=todayISO();
+    }
+    if(target==='follow'){
+      t.follow='done';
+      s.interest=isPositiveInterest(s.interest)?s.interest:'Перезвонить';
+      s.nextCall=s.nextCall||tomorrowISO();
+    }
+    if(target==='issue'){
+      if(t.write!=='done') t.write='fail';
+      if(t.kp!=='done') t.kp='fail';
+      s.interest='Email не работает';
+    }
+  }
+  if(action==='interest'){
+    s.interest=value || 'Нет данных';
+    if(s.interest==='Интересно' || s.interest==='Запросили прайс' || s.interest==='В переговорах'){
+      if(s.tasks.write==='fail') s.tasks.write='open';
+      if(s.tasks.kp==='fail') s.tasks.kp='open';
+      s.nextCall=s.nextCall||tomorrowISO();
+    }
+    if(s.interest==='Не интересно'){
+      s.nextCall='';
+      s.tasks.follow='open';
+    }
+    if(s.interest==='Перезвонить' || s.interest==='Не дозвонилась'){
+      s.nextCall=s.nextCall||tomorrowISO();
+    }
+    if(s.interest==='Email не работает'){
+      if(s.tasks.write!=='done') s.tasks.write='fail';
+      if(s.tasks.kp!=='done') s.tasks.kp='fail';
+    }
+  }
+  if(action==='nextCall'){
+    s.nextCall=value||'';
+    if(s.nextCall && !['Не интересно','Email не работает'].includes(s.interest) && !isPositiveInterest(s.interest)) s.interest='Перезвонить';
+  }
+  const addComment=(options.comment||'').trim();
+  if(addComment) s.comment=(s.comment?`${s.comment}\n`:'')+addComment;
+  normalizeLeadState(id);
+  saveState();
+  render();
+  if(typeof options.after==='function') options.after();
+}
+// Единые этапы воронки: проблема → отказ → интерес → звонок → дожим → КП/форма → новое.
+function getStage(lead){
+  const s=ensureLeadState(lead.id), t=s.tasks, int=s.interest;
+  if(int==='Email не работает' || ((t.write==='fail'||t.kp==='fail') && t.kp!=='done' && t.form!=='done')) return 'issue';
+  if(int==='Не интересно') return 'closed';
+  if(isPositiveInterest(int)) return 'interest';
+  if(leadNeedsCall(lead)) return 'call';
+  if(t.follow==='done' || isCallBackInterest(int) || (s.nextCall && !isDueDate(s.nextCall))) return 'follow';
+  if(t.kp==='done' || t.form==='done') return 'sent';
+  return 'new';
+}
+function isIssueLead(l){const s=ensureLeadState(l.id),t=s.tasks;return s.interest==='Email не работает'||((t.write==='fail'||t.kp==='fail') && t.kp!=='done' && t.form!=='done');}
+function isClosedLead(l){return ensureLeadState(l.id).interest==='Не интересно';}
+function isActiveLead(l){return !isClosedLead(l) && !isIssueLead(l);}
+function isHotInterest(int){return isPositiveInterest(int);}
+function leadNeedsCall(l){
+  const s=ensureLeadState(l.id), t=s.tasks;
+  if(s.interest==='Не интересно' || s.interest==='Email не работает' || isIssueLead(l)) return false;
+  if(isDueDate(s.nextCall)) return true;
+  if((t.kp==='done'||t.form==='done') && t.call!=='done' && t.call!=='fail') return true;
+  if(['Запросили прайс','В переговорах'].includes(s.interest)) return true;
+  return false;
+}
+function countMetric(leads, metric){
+  const callIds=new Set(getCallLeads().map(l=>l.id));
+  return dedupeLeadList(leads).filter(l=>metricFilter(l, metric) || (metric==='needcall' && callIds.has(l.id))).length;
+}
+function metricFilter(l, metric){
+  const s=ensureLeadState(l.id), t=s.tasks;
+  if(metric==='total') return true;
+  if(metric==='written') return t.write==='done';
+  if(metric==='kp') return t.kp==='done';
+  if(metric==='form') return t.form==='done';
+  if(metric==='sent') return t.kp==='done' || t.form==='done';
+  if(metric==='called') return t.call==='done' || t.call==='fail';
+  if(metric==='needcall') return leadNeedsCall(l);
+  if(metric==='hot') return isPositiveInterest(s.interest);
+  if(metric==='not_interest' || metric==='closed') return s.interest==='Не интересно';
+  if(metric==='issue') return isIssueLead(l);
+  if(metric==='active') return isActiveLead(l);
+  if(metric==='priority') return ['p1','p2'].includes(priorityInfo(l).cls);
+  if(metric==='newstage') return getStage(l)==='new';
+  return false;
+}
+function setTask(id,k,val){applyLeadTransition(id,'task',{key:k,val:val});}
+function setInterest(id,val){applyLeadTransition(id,'interest',val);}
+function setInterestQuick(id,val){applyLeadTransition(id,'interest',val,{after:null}); toast(val==='Интересно'?'Добавлено в «Интерес есть»':(val==='Не интересно'?'Добавлено в «Интереса нет»':'Статус обновлён'));}
+function setNextCall(id,val){applyLeadTransition(id,'nextCall',val);}
+function setNextCallToday(id){applyLeadTransition(id,'nextCall',todayISO()); toast('Звонок поставлен на сегодня');}
+function setNextCallTomorrow(id){applyLeadTransition(id,'nextCall',tomorrowISO()); toast('Звонок поставлен на завтра');}
+function markCalledFromCallList(id){applyLeadTransition(id,'quick','call',{after:()=>{try{renderCallList()}catch(e){}}}); toast('Отмечено: позвонила');}
+function markNoAnswerFromCallList(id){
+  pushLeadHistory(id);
+  const s=ensureLeadState(id);
+  s.tasks.call='fail';
+  s.interest='Не дозвонилась';
+  s.nextCall=tomorrowISO();
+  normalizeLeadState(id);
+  saveState(); render(); try{renderCallList()}catch(e){}; toast('Не дозвонилась: повтор на завтра');
+}
+function scheduleTomorrowFromCallList(id){applyLeadTransition(id,'interest','Перезвонить'); applyLeadTransition(id,'nextCall',tomorrowISO(),{after:()=>{try{renderCallList()}catch(e){}}}); toast('Звонок перенесён на завтра');}
+function applyActionToLead(id){
+  const addComment=(document.getElementById('actionComment')?.value||'').trim();
+  applyLeadTransition(id,'quick',quickActionTarget,{comment:addComment, after:()=>{try{renderActionSearch()}catch(e){}}});
+  toast((actionLabels[quickActionTarget]||actionLabels.kp).toast);
+}
+function applyInterestToLead(id){
+  const addComment=(document.getElementById('quickComment')?.value||'').trim();
+  applyLeadTransition(id,'interest',quickInterestTarget,{comment:addComment, after:()=>{try{renderInterestSearch()}catch(e){}}});
+  toast(quickInterestTarget==='Интересно'?'Лид добавлен в «Интерес есть»':'Лид добавлен в «Интереса нет»');
+}
+function stepBackLead(id){
+  const s=ensureLeadState(id);
+  if(s._history && s._history.length){
+    const snap=s._history.pop();
+    restoreLeadSnapshot(id,snap);
+    saveState(); render(); toast('Шаг назад выполнен');
+    return;
+  }
+  // fallback для старых сохранений без истории
+  const t=s.tasks||{};
+  let action='';
+  if(s.interest && s.interest !== 'Нет данных'){action='снят результат'; s.interest='Нет данных';}
+  else if(s.nextCall){action='снята дата звонка'; s.nextCall='';}
+  else if(t.follow==='done'||t.follow==='fail'){action='снят повтор'; t.follow='open';}
+  else if(t.call==='done'||t.call==='fail'){action='снят звонок'; t.call='open';}
+  else if(t.form==='done'||t.form==='fail'){action='снята форма'; t.form='open';}
+  else if(t.kp==='done'||t.kp==='fail'){action='снято КП'; t.kp='open';}
+  else if(t.write==='done'||t.write==='fail'){action='снято письмо'; t.write='open';}
+  else {toast('Назад некуда'); return;}
+  normalizeLeadState(id); saveState(); render(); toast('Шаг назад: '+action);
+}
+function markNext(id){
+  const s=ensureLeadState(id), t=s.tasks;
+  if(t.write!=='done'){applyLeadTransition(id,'quick','write'); toast('Следующий шаг: написали'); return;}
+  if(t.kp!=='done' && t.form!=='done'){applyLeadTransition(id,'quick','kp'); toast('Следующий шаг: КП отправлено'); return;}
+  if(t.call!=='done' && t.call!=='fail'){applyLeadTransition(id,'quick','call'); toast('Следующий шаг: позвонили'); return;}
+  if(!isPositiveInterest(s.interest) && s.interest!=='Не интересно'){applyLeadTransition(id,'quick','follow'); toast('Следующий шаг: повтор / дожим'); return;}
+  toast('Все основные действия уже связаны');
+}
+// При открытии сайта исправляем старые противоречивые состояния из браузера.
+state = normalizeAllStates(state);
+saveState();
 
 render();
 </script>

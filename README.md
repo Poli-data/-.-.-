@@ -1,12 +1,8 @@
-# Terraeco CRM
+# Terraeco B2B CRM
 
-Готовый статический сайт CRM для GitHub Pages.
+Локальная HTML CRM для B2B-лидов Terraeco / Multibac.
 
-Файлы для загрузки в корень репозитория:
+## GitHub Pages
+Загрузите файлы в корень репозитория и включите Pages: Settings → Pages → Deploy from a branch → main → /root.
 
-- `index.html` — основной сайт CRM
-- `404.html` — резервная страница
-- `.nojekyll` — отключает Jekyll
-- `README.md` — описание
-
-После загрузки включите GitHub Pages: Settings → Pages → Deploy from a branch → main → /root.
+Главный файл: `index.html`.
