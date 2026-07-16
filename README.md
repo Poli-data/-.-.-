@@ -1,3 +1,3 @@
 # Terraeco CRM
 
-Загрузить `index.html` в корень репозитория GitHub Pages.
+Главный файл сайта: `index.html`.

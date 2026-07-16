@@ -191,6 +191,12 @@
     .donut-center em{white-space:pre-line}
     .summary-donut-center em{white-space:pre-line}
     @media(max-width:900px){.stats{grid-template-columns:repeat(2,minmax(120px,1fr))}.header-actions button{font-size:11px;padding:7px 8px}.analytics-grid{grid-template-columns:1fr}.main-analytics{grid-template-columns:1fr}}
+    /* Динамические круги: цвета считаются из текущих статусов, не из картинки */
+    .donut-svg,.summary-donut-svg{background:transparent!important;overflow:hidden}
+    .donut-svg svg,.summary-donut-svg svg{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+    .donut-svg .donut-center,.summary-donut-svg .summary-donut-center{z-index:3}
+    .metric-row strong{font-weight:950}
+
 
   </style>
 </head>
@@ -3199,7 +3205,7 @@ function deleteCustomLead(id){
   customLeads=customLeads.filter(l=>l.id!==id);saveCustomLeads();delete state[id];saveState();render();toast('Лид удалён');
 }
 function loadState(){
-  const saved = localStorage.getItem('terraecoBitrixCRM_v25_balanced_linked_logic');
+  const saved = localStorage.getItem('terraecoBitrixCRM_v31_dynamic_donuts');
   const defaults = {};
   allLeads().forEach(l=>{defaults[l.id]={tasks:Object.assign({write:'open',kp:'open',form:'open',call:'open',follow:'open'},l.defaults||{}),interest:l.interest||'Нет данных',comment:l.comment||'',nextCall:l.nextCall||''};});
   if(!saved){ forceImportantDefaults(defaults); restoreClosedColumnOnce(defaults); return defaults; }
@@ -3233,7 +3239,7 @@ function forceImportantDefaults(st){
     st.roman.comment = st.roman.comment || 'Роман добавлен в повтор / дожим. Нужно повторно связаться, уточнить интерес и следующий шаг.';
   }
 }
-function saveState(){localStorage.setItem('terraecoBitrixCRM_v25_balanced_linked_logic',JSON.stringify(state));}
+function saveState(){localStorage.setItem('terraecoBitrixCRM_v31_dynamic_donuts',JSON.stringify(state));}
 
 
 let currentPreparedMail = {to:'', subject:'', body:'', full:'', leadId:null};
@@ -4175,7 +4181,7 @@ function downloadHTMLSnapshot(){
   try{saveState();saveCustomLeads();}catch(e){}
   const stateJSON=JSON.stringify(state).replace(/<\//g,'<\\/');
   const customJSON=JSON.stringify(customLeads).replace(/<\//g,'<\\/');
-  const inject='<script>try{localStorage.setItem("terraecoBitrixCRM_v25_balanced_linked_logic", '+JSON.stringify(stateJSON)+');localStorage.setItem("terraecoBitrixCRM_customLeads_v25_balanced_linked_logic", '+JSON.stringify(customJSON)+');}catch(e){}<\/script>';
+  const inject='<script>try{localStorage.setItem("terraecoBitrixCRM_v31_dynamic_donuts", '+JSON.stringify(stateJSON)+');localStorage.setItem("terraecoBitrixCRM_customLeads_v25_balanced_linked_logic", '+JSON.stringify(customJSON)+');}catch(e){}<\/script>';
   let html='<!doctype html>\n'+document.documentElement.outerHTML;
   html=html.replace('</body>', inject+'</body>');
   const blob=new Blob([html],{type:'text/html;charset=utf-8'});
@@ -4188,7 +4194,7 @@ function downloadHTMLSnapshot(){
   toast('HTML-файл для отправки создан');
 }
 
-function resetAllConfirm(){if(confirm('Сбросить все галочки, интересы и комментарии к начальному состоянию?')){['terraecoBitrixCRM_v25_closed_column_restore_disabled','terraecoBitrixCRM_v25_balanced_linked_logic','terraecoBitrixCRM_customLeads_v25_balanced_linked_logic','terraecoBitrixCRM_v20_all_leads_embedded','terraecoBitrixCRM_customLeads_v20_all_leads_embedded','terraecoBitrixCRM_v12_vasiliy_single','terraecoBitrixCRM_customLeads_v12_vasiliy_single','terraecoBitrixCRM_v10_dedup_links','terraecoBitrixCRM_customLeads_v10_dedup_links'].forEach(k=>localStorage.removeItem(k));customLeads=[];state=loadState();render();}}
+function resetAllConfirm(){if(confirm('Сбросить все галочки, интересы и комментарии к начальному состоянию?')){['terraecoBitrixCRM_v25_closed_column_restore_disabled','terraecoBitrixCRM_v31_dynamic_donuts','terraecoBitrixCRM_customLeads_v25_balanced_linked_logic','terraecoBitrixCRM_v20_all_leads_embedded','terraecoBitrixCRM_customLeads_v20_all_leads_embedded','terraecoBitrixCRM_v12_vasiliy_single','terraecoBitrixCRM_customLeads_v12_vasiliy_single','terraecoBitrixCRM_v10_dedup_links','terraecoBitrixCRM_customLeads_v10_dedup_links'].forEach(k=>localStorage.removeItem(k));customLeads=[];state=loadState();render();}}
 function exportCSV(){
   const rows=[['Компания','Направление','Тип','Email','Телефон','Сайт','Написать','КП','Форма','Позвонить','Повтор','Интерес','Следующий звонок','Комментарий']];
   allLeads().forEach(l=>{const s=state[l.id];rows.push([l.company,l.direction,l.type,l.email,l.phone,l.site,s.tasks.write,s.tasks.kp,s.tasks.form,s.tasks.call,s.tasks.follow,s.interest,s.nextCall||'',s.comment]);});
@@ -4552,6 +4558,183 @@ function markNext(id){
   if(!isPositiveInterest(s.interest) && s.interest!=='Не интересно'){applyLeadTransition(id,'quick','follow'); toast('Следующий шаг: повтор / дожим'); return;}
   toast('Все основные действия уже связаны');
 }
+
+
+/* === ФИНАЛЬНАЯ ЛОГИКА ДИНАМИЧЕСКИХ КРУЖКОВ ===
+   Круги не нарисованы вручную. Они каждый раз пересчитываются из state/tasks/interest:
+   1) проблема, 2) отказ, 3) интерес, 4) надо звонить, 5) КП/форма, 6) написали, 7) новое.
+*/
+const DONUT_COLORS = {
+  hot: '#16a34a',       // ОК / интерес
+  call: '#f97316',      // надо звонить
+  sent: '#2563eb',      // КП / форма
+  written: '#f59e0b',   // написали
+  bad: '#dc2626',       // отказ / не интересно
+  issue: '#7c3aed',     // проблема
+  other: '#e5e7eb'      // новые / прочее
+};
+const DONUT_LABELS = {
+  hot:'ОК / интерес', call:'надо звонить', sent:'КП / форма', written:'написали', bad:'не интересно', issue:'проблема', other:'новые / прочее'
+};
+function currentLeadBucket(lead, callIds){
+  const s = ensureLeadState(lead.id);
+  const t = s.tasks || {};
+  if(isIssueLead(lead) || s.interest === 'Email не работает') return 'issue';
+  if(s.interest === 'Не интересно') return 'bad';
+  if(isPositiveInterest(s.interest)) return 'hot';
+  if((callIds && callIds.has(lead.id)) || leadNeedsCall(lead)) return 'call';
+  if(t.kp === 'done' || t.form === 'done') return 'sent';
+  if(t.write === 'done') return 'written';
+  return 'other';
+}
+function buildStatusBuckets(leads){
+  const clean = dedupeLeadList(leads || []);
+  const callIds = new Set(getCallLeads().map(l=>l.id));
+  const buckets = {hot:0, call:0, sent:0, written:0, bad:0, issue:0, other:0};
+  clean.forEach(l=>{ buckets[currentLeadBucket(l, callIds)]++; });
+  return buckets;
+}
+function donutSegmentsSvg(buckets, size=108, stroke=18){
+  const keys = ['hot','call','sent','written','bad','issue','other'];
+  const total = keys.reduce((sum,k)=>sum+(buckets[k]||0),0);
+  const r = (size - stroke) / 2;
+  const c = 2 * Math.PI * r;
+  const cx = size / 2;
+  const cy = size / 2;
+  let offset = 0;
+  let circles = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${DONUT_COLORS.other}" stroke-width="${stroke}"/>`;
+  if(total > 0){
+    circles = '';
+    keys.forEach(k=>{
+      const v = buckets[k] || 0;
+      if(!v) return;
+      const len = c * (v / total);
+      const gap = total > 1 && v < total ? 1.5 : 0;
+      const dashLen = Math.max(0, len - gap);
+      circles += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${DONUT_COLORS[k]}" stroke-width="${stroke}" stroke-dasharray="${dashLen} ${c-dashLen}" stroke-dashoffset="${-offset}" stroke-linecap="butt"/>`;
+      offset += len;
+    });
+  }
+  return `<svg viewBox="0 0 ${size} ${size}" aria-hidden="true"><g transform="rotate(-90 ${cx} ${cy})">${circles}</g></svg>`;
+}
+function bucketTitle(buckets){
+  return Object.keys(DONUT_LABELS).map(k=>`${DONUT_LABELS[k]}: ${buckets[k]||0}`).join('; ');
+}
+function compactBucketText(buckets){
+  const ok = buckets.hot || 0;
+  const call = buckets.call || 0;
+  const bad = buckets.bad || 0;
+  return `${ok} ок · ${call} звон\n${bad} отказ`;
+}
+function metricCard(label,num,cls,action){return `<div class="summary-metric ${cls||''}" onclick="${action}"><b>${num}</b><span>${label}</span></div>`;}
+
+// Полностью динамическая верхняя аналитика.
+function renderMainAnalytics(){
+  const el=document.getElementById('mainAnalytics'); if(!el) return;
+  const leads=dedupeLeadList(filteredLeads());
+  const total=leads.length || 1;
+  const active=countMetric(leads,'active');
+  const hot=countMetric(leads,'hot');
+  const closed=countMetric(leads,'closed');
+  const issue=countMetric(leads,'issue');
+  const written=countMetric(leads,'written');
+  const sent=countMetric(leads,'sent');
+  const kp=countMetric(leads,'kp');
+  const form=countMetric(leads,'form');
+  const called=countMetric(leads,'called');
+  const needcall=countMetric(leads,'needcall');
+  const follow=countMetric(leads,'follow');
+  const stageCounts={}; columns.forEach(c=>stageCounts[c.id]=leads.filter(l=>getStage(l)===c.id).length); stageCounts.call=needcall;
+  const buckets=buildStatusBuckets(leads);
+  const stageRows=[
+    ['new','Новые / написать','blue'],['sent','КП отправлено','orange'],['call','Надо позвонить','green'],['follow','Повтор / дожим','yellow'],['interest','Интерес есть','green'],['closed','Нет интереса','red'],['issue','Email проблема','purple']
+  ].map(([id,label,cls])=>{
+    const v=stageCounts[id]||0; const w=percentOf(v,total);
+    return `<div class="funnel-row ${cls}" onclick="openStageList('${id}')"><div class="funnel-name">${label}</div><div class="funnel-bar"><div class="funnel-fill" style="width:${w}%"></div></div><div class="funnel-count">${v}</div></div>`;
+  }).join('');
+  el.innerHTML=`<div class="main-analytics">
+    <div class="summary-card">
+      <div class="summary-title"><h3>Кто ОК / кто не ОК</h3><span>${leads.length} лидов</span></div>
+      <div class="summary-donut-wrap">
+        <div class="summary-donut summary-donut-svg" title="${bucketTitle(buckets)}">
+          ${donutSegmentsSvg(buckets,126,24)}
+          <div class="summary-donut-center"><b>${leads.length}</b><span>лидов</span><em>${compactBucketText(buckets)}</em></div>
+        </div>
+        <div>
+          <div class="legend"><span><i class="dot green"></i>ОК / интерес ${buckets.hot}</span><span><i class="dot orange"></i>надо звонить ${buckets.call}</span><span><i class="dot blue"></i>КП/форма ${buckets.sent}</span><span><i class="dot yellow"></i>написали ${buckets.written}</span><span><i class="dot red"></i>не ОК ${buckets.bad}</span><span><i class="dot purple"></i>проблемы ${buckets.issue}</span><span><i class="dot gray"></i>новые ${buckets.other}</span></div>
+          <div class="summary-metrics" style="margin-top:12px">
+            ${metricCard('В работе',active,'green',"openTopStatList('active')")}
+            ${metricCard('Не интересно',closed,'red',"openTopStatList('closed')")}
+            ${metricCard('Надо звонить',needcall,'orange',"openTopStatList('call')")}
+            ${metricCard('Проблемы',issue,'red',"openTopStatList('issue')")}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-title"><h3>Что уже сделано</h3><span>по текущему фильтру</span></div>
+      <div class="summary-metrics">
+        ${metricCard('Написали',written,'blue',"openTopStatList('written')")}
+        ${metricCard('КП отправлено',kp,'orange',"openTopStatList('kp')")}
+        ${metricCard('Формы / заявки',form,'orange',"openTopStatList('form')")}
+        ${metricCard('КП или форма',sent,'orange',"openTopStatList('sentAll')")}
+        ${metricCard('Обзвонили',called,'green',"openTopStatList('calledAll')")}
+        ${metricCard('Повтор / дожим',follow,'blue',"openStageList('follow')")}
+        ${metricCard('Интерес есть',hot,'green',"openTopStatList('hot')")}
+        ${metricCard('Новые',stageCounts.new||0,'',"openStageList('new')")}
+      </div>
+      <div style="margin-top:12px">
+        <div class="summary-title"><h3>Кто на какой стадии</h3><span>воронка</span></div>
+        <div class="funnel-grid">${stageRows}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// Динамические кружки по направлениям: каждый цвет пересчитывается из текущих статусов.
+function renderSegmentStats(){
+  const groups=[
+    {id:'Септик-установщики', title:'🛠️ Септик-установщики', sub:'монтаж, сервис, интернет-магазины септиков'},
+    {id:'Оптовики', title:'📦 Оптовики', sub:'сад, дача, хозтовары, дистрибьюторы'},
+    {id:'Сети', title:'🏬 Сети', sub:'DIY, гипермаркеты, крупные каналы'},
+    {id:'Трубочист', title:'🔥 Трубочист / дымоходы', sub:'печи, камины, бани, котлы, дымоходы'},
+    {id:'Гидрогель', title:'💧 Гидрогель', sub:'садовые центры, оптовики, дачная полка'},
+    {id:'Удобрения', title:'🌿 Удобрения', sub:'семена, садовые центры, подкормки, органика'}
+  ];
+  const callIds=new Set(getCallLeads().map(l=>l.id));
+  const html = groups.map(g=>{
+    const list=dedupeLeadList(segmentLeads(g.id));
+    const total=list.length;
+    const written=list.filter(l=>metricFilter(l,'written')).length;
+    const sent=list.filter(l=>metricFilter(l,'sent')).length;
+    const called=list.filter(l=>metricFilter(l,'called')).length;
+    const needCall=list.filter(l=>callIds.has(l.id)).length;
+    const hot=list.filter(l=>metricFilter(l,'hot')).length;
+    const notInterested=list.filter(l=>metricFilter(l,'not_interest')).length;
+    const issues=list.filter(l=>metricFilter(l,'issue')).length;
+    const buckets=buildStatusBuckets(list);
+    return `<div class="segment-card">
+      <div class="segment-head"><div><div class="segment-title">${g.title}</div><div class="segment-sub">${g.sub}</div></div><span class="badge">${total}</span></div>
+      <div class="donut donut-svg" title="${bucketTitle(buckets)}">
+        ${donutSegmentsSvg(buckets,108,18)}
+        <div class="donut-center"><b>${total}</b><span>лидов</span><em>${compactBucketText(buckets)}</em></div>
+      </div>
+      <div class="metric-list">
+        <div class="metric-row total" onclick="openSegmentList('${g.id}','total')"><span>Всего клиентов</span><b>${total}</b></div>
+        <div class="metric-row written" onclick="openSegmentList('${g.id}','written')"><span>Написали</span><b>${written}</b></div>
+        <div class="metric-row sentMetric" onclick="openSegmentList('${g.id}','sent')"><span>КП / форма</span><b>${sent}</b></div>
+        <div class="metric-row called" onclick="openSegmentList('${g.id}','called')"><span>Обзвонили</span><b>${called}</b></div>
+        <div class="metric-row called" onclick="openSegmentList('${g.id}','needcall')"><span>Надо позвонить</span><b>${needCall}</b></div>
+        <div class="metric-row hotMetric" onclick="openSegmentList('${g.id}','hot')"><span>Интерес есть</span><b>${hot}</b></div>
+        <div class="metric-row closedMetric" onclick="openSegmentList('${g.id}','not_interest')"><span>Не интересно</span><b>${notInterested}</b></div>
+        <div class="metric-row" onclick="openSegmentList('${g.id}','issue')"><span>Email / проблема</span><b>${issues}</b></div>
+      </div>
+      <div class="legend"><span><i class="dot green"></i>ОК/интерес ${buckets.hot}</span><span><i class="dot orange"></i>звонить ${buckets.call}</span><span><i class="dot blue"></i>КП/форма ${buckets.sent}</span><span><i class="dot yellow"></i>написали ${buckets.written}</span><span><i class="dot red"></i>отказ ${buckets.bad}</span><span><i class="dot purple"></i>проблема ${buckets.issue}</span><span><i class="dot gray"></i>новые ${buckets.other}</span></div>
+    </div>`;
+  }).join('');
+  const el=document.getElementById('segmentStats'); if(el) el.innerHTML=html;
+}
+
 // При открытии сайта исправляем старые противоречивые состояния из браузера.
 state = normalizeAllStates(state);
 saveState();
