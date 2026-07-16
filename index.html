@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="format-detection" content="telephone=no" />
   <meta name="robots" content="noindex,nofollow" />
-  <title>B2B CRM Terraeco — логичная воронка</title>
+  <title>B2B CRM Terraeco — связанная логика и нормальные кружки</title>
   <style>
     :root{
       --bg:#f4f7fb;
@@ -89,14 +89,14 @@
     .segment-title{font-size:16px;font-weight:950;line-height:1.2}.segment-sub{font-size:11px;color:var(--muted);font-weight:800}
     .donut{width:108px;height:108px;border-radius:50%;position:relative;background:conic-gradient(var(--green) 0deg, var(--green) 0deg, var(--blue) 0deg, var(--blue) 0deg, var(--orange) 0deg, var(--orange) 0deg, #e5e7eb 0deg)}
     .donut:after{content:"";position:absolute;inset:18px;background:#fff;border-radius:50%;box-shadow:inset 0 0 0 1px #edf2f7}
-    .donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2;line-height:1.05;text-align:center}.donut-center b{font-size:24px}.donut-center span{font-size:10px;color:var(--muted);font-weight:900;text-transform:uppercase;letter-spacing:.4px}.donut-center em{margin-top:3px;font-size:11px;font-style:normal;font-weight:950;color:var(--red);line-height:1}
+    .donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2;line-height:1.05;text-align:center}.donut-center b{font-size:24px}.donut-center span{font-size:10px;color:var(--muted);font-weight:900;text-transform:uppercase;letter-spacing:.4px}.donut-center em{margin-top:3px;font-size:11px;font-style:normal;font-weight:950;color:#475569;line-height:1}
     .metric-list{display:grid;gap:7px}.metric-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:8px 10px;border:1px solid #e6edf7;border-radius:12px;background:#f8fbff;cursor:pointer}.metric-row:hover{background:#eef4ff;transform:translateY(-1px)}.metric-row span{font-size:12px;font-weight:900;color:#334155}.metric-row b{font-size:14px}
     .metric-row.total{background:#f8fafc}.metric-row.written{border-color:#dbeafe}.metric-row.sentMetric{border-color:#fed7aa}.metric-row.called{border-color:#bbf7d0}.metric-row.hotMetric{border-color:#fde68a}.metric-row.closedMetric{border-color:#fecaca;background:#fff7f7}
 
     .main-analytics{display:grid;grid-template-columns:1.05fr 1.4fr;gap:14px;align-items:stretch}
     .summary-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:14px;box-shadow:var(--shadow)}
     .summary-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.summary-title h3{margin:0;font-size:16px}.summary-title span{font-size:12px;font-weight:900;color:var(--muted)}
-    .summary-donut-wrap{display:grid;grid-template-columns:128px 1fr;gap:14px;align-items:center}.summary-donut{width:126px;height:126px;border-radius:50%;position:relative;background:#e5e7eb}.summary-donut:after{content:"";position:absolute;inset:23px;background:#fff;border-radius:50%;box-shadow:inset 0 0 0 1px #edf2f7}.summary-donut-center{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;line-height:1.05}.summary-donut-center b{font-size:24px}.summary-donut-center span{font-size:10px;font-weight:950;color:#64748b;text-transform:uppercase}.summary-donut-center em{font-size:11px;font-style:normal;font-weight:950;color:var(--red);margin-top:4px}
+    .summary-donut-wrap{display:grid;grid-template-columns:128px 1fr;gap:14px;align-items:center}.summary-donut{width:126px;height:126px;border-radius:50%;position:relative;background:#e5e7eb}.summary-donut:after{content:"";position:absolute;inset:23px;background:#fff;border-radius:50%;box-shadow:inset 0 0 0 1px #edf2f7}.summary-donut-center{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;line-height:1.05}.summary-donut-center b{font-size:24px}.summary-donut-center span{font-size:10px;font-weight:950;color:#64748b;text-transform:uppercase}.summary-donut-center em{font-size:11px;font-style:normal;font-weight:950;color:#475569;margin-top:4px}
     .summary-metrics{display:grid;grid-template-columns:repeat(4,minmax(110px,1fr));gap:8px}.summary-metric{border:1px solid #e6edf7;border-radius:14px;background:#f8fbff;padding:10px;cursor:pointer;min-height:68px}.summary-metric:hover{background:#eef4ff;transform:translateY(-1px)}.summary-metric b{display:block;font-size:22px;line-height:1}.summary-metric span{display:block;margin-top:6px;font-size:11px;font-weight:950;color:#475569}.summary-metric.green{border-color:#bbf7d0;background:#f0fdf4}.summary-metric.red{border-color:#fecaca;background:#fff7f7}.summary-metric.orange{border-color:#fed7aa;background:#fff7ed}.summary-metric.blue{border-color:#dbeafe;background:#eff6ff}
     .funnel-grid{display:grid;gap:8px}.funnel-row{display:grid;grid-template-columns:126px 1fr 42px;gap:10px;align-items:center;border:1px solid #e6edf7;border-radius:12px;padding:8px 10px;background:#f8fbff;cursor:pointer}.funnel-row:hover{background:#eef4ff}.funnel-name{font-size:12px;font-weight:950;color:#334155}.funnel-bar{height:10px;background:#e5e7eb;border-radius:999px;overflow:hidden}.funnel-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--green))}.funnel-count{text-align:right;font-weight:950}.funnel-row.red .funnel-fill{background:var(--red)}.funnel-row.orange .funnel-fill{background:var(--orange)}.funnel-row.green .funnel-fill{background:var(--green)}.funnel-row.yellow .funnel-fill{background:var(--yellow)}.funnel-row.gray .funnel-fill{background:#94a3b8}.funnel-row.purple .funnel-fill{background:#7c3aed}
     .dot.yellow{background:var(--yellow)}.dot.purple{background:#7c3aed}
@@ -491,7 +491,7 @@ const baseLeads = [
       "call": "open",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Нет данных",
     "comment": "Дата последнего контакта: 26.06.2026. Статус: КП отправлено. Приоритет: Средний. Интересуем?: нд. Следующий контакт: 26.06.2026. Что сейчас: КП ушло, но ответа нет.",
     "nextCall": "2026-06-26"
   },
@@ -513,7 +513,7 @@ const baseLeads = [
       "call": "open",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Нет данных",
     "comment": "КП отправлено. Следующий шаг: звонок и уточнение закупщика.",
     "nextCall": ""
   },
@@ -557,7 +557,7 @@ const baseLeads = [
       "call": "open",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Нет данных",
     "comment": "КП отправлено. Следующий шаг: звонок и уточнение закупщика.",
     "nextCall": ""
   },
@@ -579,7 +579,7 @@ const baseLeads = [
       "call": "open",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Нет данных",
     "comment": "КП отправлено. Следующий шаг: звонок и уточнение закупщика.",
     "nextCall": ""
   },
@@ -601,7 +601,7 @@ const baseLeads = [
       "call": "open",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Нет данных",
     "comment": "КП отправлено. Следующий шаг: звонок и уточнение закупщика.",
     "nextCall": ""
   },
@@ -623,7 +623,7 @@ const baseLeads = [
       "call": "open",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Нет данных",
     "comment": "КП отправлено. Следующий шаг: звонок и уточнение закупщика.",
     "nextCall": ""
   },
@@ -645,7 +645,7 @@ const baseLeads = [
       "call": "open",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Нет данных",
     "comment": "КП отправлено. Следующий шаг: звонок и уточнение закупщика.",
     "nextCall": ""
   },
@@ -667,7 +667,7 @@ const baseLeads = [
       "call": "open",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Нет данных",
     "comment": "Дата последнего контакта: 25.06.2026. Приоритет: Средний. Что сейчас: Почта.",
     "nextCall": ""
   },
@@ -689,7 +689,7 @@ const baseLeads = [
       "call": "open",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Нет данных",
     "comment": "Приоритет: Средний. Что сейчас: Почта.",
     "nextCall": ""
   },
@@ -711,7 +711,7 @@ const baseLeads = [
       "call": "open",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Нет данных",
     "comment": "КП отправлено. Следующий шаг: звонок и уточнение закупщика.",
     "nextCall": ""
   },
@@ -733,7 +733,7 @@ const baseLeads = [
       "call": "open",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Нет данных",
     "comment": "КП отправлено. Следующий шаг: звонок и уточнение закупщика.",
     "nextCall": ""
   },
@@ -755,7 +755,7 @@ const baseLeads = [
       "call": "open",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Нет данных",
     "comment": "КП отправлено. Следующий шаг: звонок и уточнение закупщика.",
     "nextCall": ""
   },
@@ -771,13 +771,13 @@ const baseLeads = [
     "offer": "Уточнить актуальный email и отправить КП",
     "priority": "B рабочий",
     "defaults": {
-      "write": "open",
-      "kp": "open",
+      "write": "fail",
+      "kp": "fail",
       "form": "open",
       "call": "open",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Email не работает",
     "comment": "info@septic-doma.ru не работает: user not found.",
     "nextCall": ""
   },
@@ -865,7 +865,7 @@ const baseLeads = [
       "call": "done",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Нет данных",
     "comment": "Дата последнего контакта: 25.06.2026. Статус: КП отправлено. Приоритет: Высокий. Интересуем?: нд. Что сейчас: Форма поставщика (контакта нет) — ждём.",
     "nextCall": ""
   },
@@ -909,7 +909,7 @@ const baseLeads = [
       "call": "done",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Интересно",
     "comment": "Дата последнего контакта: 25.06.2026. Статус: КП отправлено. Приоритет: Средний. Интересуем?: Да. Следующий контакт: 14.07.2026. Что сейчас: Направить инфо по гидрогелю. Ответственный будет 14.07. Гидрогель: написать, что мы производитель.",
     "nextCall": "2026-07-14"
   },
@@ -931,7 +931,7 @@ const baseLeads = [
       "call": "done",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Нет данных",
     "comment": "Дата последнего контакта: 25.06.2026. Статус: КП отправлено. Приоритет: Средний. Интересуем?: нд. Следующий контакт: 02.07.2026. Что сейчас: Ногинск.",
     "nextCall": "2026-07-02"
   },
@@ -953,7 +953,7 @@ const baseLeads = [
       "call": "done",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Нет данных",
     "comment": "Дата последнего контакта: 26.06.2026. Статус: КП отправлено. Приоритет: Средний. Что сейчас: КП отправлено, подробностей по результату пока нет.",
     "nextCall": ""
   },
@@ -975,7 +975,7 @@ const baseLeads = [
       "call": "done",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Нет данных",
     "comment": "Дата последнего контакта: 26.06.2026. Статус: КП отправлено. Приоритет: Средний. Интересуем?: нд. Следующий контакт: 08.07.2026. Что сейчас: Отправить ещё раз КП.",
     "nextCall": "2026-07-08"
   },
@@ -1019,7 +1019,7 @@ const baseLeads = [
       "call": "done",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Нет данных",
     "comment": "Дата последнего контакта: 26.06.2026. Статус: КП отправлено. Приоритет: Средний. Интересуем?: нд. Следующий контакт: 26.06.2026. Что сейчас: Посмотреть сайт Тимирязевская академия, номер телефона.",
     "nextCall": "2026-06-26"
   },
@@ -1041,7 +1041,7 @@ const baseLeads = [
       "call": "done",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Интересно",
     "comment": "Дата последнего контакта: 26.06.2026. Статус: КП отправлено. Приоритет: Средний. Интересуем?: Да. Следующий контакт: 26.06.2026. Что сейчас: Месяц и продажа финиш. Осень–октябрь. Контакт: Shpak@sad.ru",
     "nextCall": "2026-06-26"
   },
@@ -1063,7 +1063,7 @@ const baseLeads = [
       "call": "done",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Нет данных",
     "comment": "Дата последнего контакта: 26.06.2026. Статус: КП отправлено. Приоритет: Высокий. Интересуем?: нд. Следующий контакт: 26.06.2026. Что сейчас: Форма партнёра.",
     "nextCall": "2026-06-26"
   },
@@ -1107,7 +1107,7 @@ const baseLeads = [
       "call": "done",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Нет данных",
     "comment": "Дата последнего контакта: 29.06.2026. Статус: КП отправлено. Приоритет: Высокий. Интересуем?: нд. Следующий контакт: 29.06.2026. Что сейчас: Направила повторно.",
     "nextCall": "2026-06-29"
   },
@@ -1129,7 +1129,7 @@ const baseLeads = [
       "call": "done",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Интересно",
     "comment": "Дата последнего контакта: 29.06.2026. Статус: КП отправлено. Приоритет: Средний. Интересуем?: Да. Следующий контакт: 29.06.2026. Что сейчас: Удобрения: направила КП, позвонить.",
     "nextCall": "2026-06-29"
   },
@@ -1173,7 +1173,7 @@ const baseLeads = [
       "call": "done",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Нет данных",
     "comment": "Дата последнего контакта: 29.06.2026. Статус: КП отправлено. Приоритет: Высокий. Интересуем?: нд. Следующий контакт: 29.06.2026. Что сейчас: Без ответа.",
     "nextCall": "2026-06-29"
   },
@@ -1481,7 +1481,7 @@ const baseLeads = [
       "call": "open",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Нет данных",
     "comment": "",
     "nextCall": ""
   },
@@ -2713,7 +2713,7 @@ const baseLeads = [
       "call": "open",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Нет данных",
     "comment": "",
     "nextCall": ""
   },
@@ -2911,7 +2911,7 @@ const baseLeads = [
       "call": "done",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Интересно",
     "comment": "Дата последнего контакта: 24.06.2026. Статус: КП отправлено. Приоритет: Высокий. Интересуем?: Да. Следующий контакт: 24.06.2026. Что сейчас: Жду контакт закупки.",
     "nextCall": "2026-06-24"
   },
@@ -2933,7 +2933,7 @@ const baseLeads = [
       "call": "done",
       "follow": "open"
     },
-    "interest": "Не интересно",
+    "interest": "Нет данных",
     "comment": "Дата последнего контакта: 25.06.2026. Статус: КП отправлено. Приоритет: Высокий. Интересуем?: нд. Следующий контакт: 02.07.2026. Что сейчас: Екатеринбург",
     "nextCall": "2026-07-02"
   }
@@ -2941,22 +2941,14 @@ const baseLeads = [
 
 const taskNames = {write:'Написать', kp:'Отправить КП', form:'Форма / заявка', call:'Позвонить', follow:'Повтор / дожим'};
 const RESTORE_CLOSED_COLUMN_IDS = ['agroprogress','gala-centr','darvin','dacha-ferma-ogorod','kak-kupit-septik','navokom','opt-tut','opt-hoz','planeta-sadovod-septiki','puls-cen-bakterii-optom','sadovod-yasenevo','sadovyy-centr-msha','sadhoztorg-uralhoztorg','sv-sad','septik-doma','septik-market','septik-mo','septik-termit','septik-eko','servis-topas','sima-lend','hozabsolyut','hoztovary-ru','akva-septik-tyumen','letto','maximum-tools','rialta','sad-ru','septik-shop','septikcity','septikoff','sunoptom'];
-function restoreClosedColumnOnce(st){
-  const marker='terraecoBitrixCRM_v24_closed_column_restored_once';
-  if(localStorage.getItem(marker)) return st;
-  RESTORE_CLOSED_COLUMN_IDS.forEach(id=>{
-    if(st[id]) st[id].interest='Не интересно';
-  });
-  try{localStorage.setItem(marker,'1');}catch(e){}
-  return st;
-}
+function restoreClosedColumnOnce(st){ return st; }
 
 let customLeads = loadCustomLeads();
 let state = loadState();
 let currentFilter = 'Все';
 
 function loadCustomLeads(){
-  const saved = localStorage.getItem('terraecoBitrixCRM_customLeads_v24_comments_notinterest');
+  const saved = localStorage.getItem('terraecoBitrixCRM_customLeads_v25_balanced_linked_logic');
   if(!saved) return [];
   try{
     const arr = JSON.parse(saved)||[];
@@ -2973,7 +2965,7 @@ function loadCustomLeads(){
     });
   }catch(e){return [];} 
 }
-function saveCustomLeads(){localStorage.setItem('terraecoBitrixCRM_customLeads_v24_comments_notinterest', JSON.stringify(customLeads));}
+function saveCustomLeads(){localStorage.setItem('terraecoBitrixCRM_customLeads_v25_balanced_linked_logic', JSON.stringify(customLeads));}
 function normalizeLeadName(name){
   let s = String(name||'')
     .toLowerCase()
@@ -3207,7 +3199,7 @@ function deleteCustomLead(id){
   customLeads=customLeads.filter(l=>l.id!==id);saveCustomLeads();delete state[id];saveState();render();toast('Лид удалён');
 }
 function loadState(){
-  const saved = localStorage.getItem('terraecoBitrixCRM_v24_comments_notinterest');
+  const saved = localStorage.getItem('terraecoBitrixCRM_v25_balanced_linked_logic');
   const defaults = {};
   allLeads().forEach(l=>{defaults[l.id]={tasks:Object.assign({write:'open',kp:'open',form:'open',call:'open',follow:'open'},l.defaults||{}),interest:l.interest||'Нет данных',comment:l.comment||'',nextCall:l.nextCall||''};});
   if(!saved){ forceImportantDefaults(defaults); restoreClosedColumnOnce(defaults); return defaults; }
@@ -3241,7 +3233,7 @@ function forceImportantDefaults(st){
     st.roman.comment = st.roman.comment || 'Роман добавлен в повтор / дожим. Нужно повторно связаться, уточнить интерес и следующий шаг.';
   }
 }
-function saveState(){localStorage.setItem('terraecoBitrixCRM_v24_comments_notinterest',JSON.stringify(state));}
+function saveState(){localStorage.setItem('terraecoBitrixCRM_v25_balanced_linked_logic',JSON.stringify(state));}
 
 
 let currentPreparedMail = {to:'', subject:'', body:'', full:'', leadId:null};
@@ -3388,12 +3380,13 @@ function renderMainAnalytics(){
   const needcall=countMetric(leads,'needcall');
   const follow=countMetric(leads,'follow');
   const stageCounts={}; columns.forEach(c=>stageCounts[c.id]=leads.filter(l=>getStage(l)===c.id).length); stageCounts.call=needcall;
-  const aRed=Math.round((closed/total)*360);
-  const aPurple=aRed+Math.round((issue/total)*360);
-  const aGreen=aPurple+Math.round((hot/total)*360);
+  const aGreen=Math.round((hot/total)*360);
   const aOrange=aGreen+Math.round((needcall/total)*360);
   const aBlue=aOrange+Math.round((sent/total)*360);
-  const donutBg=`conic-gradient(var(--red) 0deg ${aRed}deg, #7c3aed ${aRed}deg ${aPurple}deg, var(--green) ${aPurple}deg ${aGreen}deg, var(--orange) ${aGreen}deg ${aOrange}deg, var(--blue) ${aOrange}deg ${aBlue}deg, #e5e7eb ${aBlue}deg 360deg)`;
+  const aYellow=aBlue+Math.round((written/total)*360);
+  const aRed=aYellow+Math.round((closed/total)*360);
+  const aPurple=aRed+Math.round((issue/total)*360);
+  const donutBg=`conic-gradient(var(--green) 0deg ${aGreen}deg, var(--orange) ${aGreen}deg ${aOrange}deg, var(--blue) ${aOrange}deg ${aBlue}deg, var(--yellow) ${aBlue}deg ${aYellow}deg, var(--red) ${aYellow}deg ${aRed}deg, #7c3aed ${aRed}deg ${aPurple}deg, #e5e7eb ${aPurple}deg 360deg)`;
   const metricCard=(label,num,cls,action)=>`<div class="summary-metric ${cls||''}" onclick="${action}"><b>${num}</b><span>${label}</span></div>`;
   const stageRows=[
     ['new','Новые / написать','blue'],['sent','КП отправлено','orange'],['call','Надо позвонить','green'],['follow','Повтор / дожим','yellow'],['interest','Интерес есть','green'],['closed','Нет интереса','red'],['issue','Email проблема','purple']
@@ -3644,8 +3637,8 @@ function renderSegmentStats(){
       else bucket.other++;
     });
     const deg=(n)=> total?Math.round((n/total)*360):0;
-    const dRed=deg(bucket.bad), dPurple=dRed+deg(bucket.issue), dGreen=dPurple+deg(bucket.hot), dOrange=dGreen+deg(bucket.call), dBlue=dOrange+deg(bucket.sent), dYellow=dBlue+deg(bucket.written);
-    const bg=`conic-gradient(var(--red) 0deg ${dRed}deg, #7c3aed ${dRed}deg ${dPurple}deg, var(--green) ${dPurple}deg ${dGreen}deg, var(--orange) ${dGreen}deg ${dOrange}deg, var(--blue) ${dOrange}deg ${dBlue}deg, var(--yellow) ${dBlue}deg ${dYellow}deg, #e5e7eb ${dYellow}deg 360deg)`;
+    const dGreen=deg(bucket.hot), dOrange=dGreen+deg(bucket.call), dBlue=dOrange+deg(bucket.sent), dYellow=dBlue+deg(bucket.written), dRed=dYellow+deg(bucket.bad), dPurple=dRed+deg(bucket.issue);
+    const bg=`conic-gradient(var(--green) 0deg ${dGreen}deg, var(--orange) ${dGreen}deg ${dOrange}deg, var(--blue) ${dOrange}deg ${dBlue}deg, var(--yellow) ${dBlue}deg ${dYellow}deg, var(--red) ${dYellow}deg ${dRed}deg, #7c3aed ${dRed}deg ${dPurple}deg, #e5e7eb ${dPurple}deg 360deg)`;
     return `<div class="segment-card">
       <div class="segment-head"><div><div class="segment-title">${g.title}</div><div class="segment-sub">${g.sub}</div></div><span class="badge">${total}</span></div>
       <div class="donut" style="background:${bg}" title="ОК/интерес: ${hot}; надо звонить: ${needCall}; КП/форма: ${sent}; написали: ${written}; не интересно: ${notInterested}; проблемы: ${issues}; новые/прочее: ${bucket.other}"><div class="donut-center"><b>${total}</b><span>лидов</span><em>${hot} ок · ${needCall} звон\n${notInterested} отказ</em></div></div>
@@ -4182,7 +4175,7 @@ function downloadHTMLSnapshot(){
   try{saveState();saveCustomLeads();}catch(e){}
   const stateJSON=JSON.stringify(state).replace(/<\//g,'<\\/');
   const customJSON=JSON.stringify(customLeads).replace(/<\//g,'<\\/');
-  const inject='<script>try{localStorage.setItem("terraecoBitrixCRM_v24_comments_notinterest", '+JSON.stringify(stateJSON)+');localStorage.setItem("terraecoBitrixCRM_customLeads_v24_comments_notinterest", '+JSON.stringify(customJSON)+');}catch(e){}<\/script>';
+  const inject='<script>try{localStorage.setItem("terraecoBitrixCRM_v25_balanced_linked_logic", '+JSON.stringify(stateJSON)+');localStorage.setItem("terraecoBitrixCRM_customLeads_v25_balanced_linked_logic", '+JSON.stringify(customJSON)+');}catch(e){}<\/script>';
   let html='<!doctype html>\n'+document.documentElement.outerHTML;
   html=html.replace('</body>', inject+'</body>');
   const blob=new Blob([html],{type:'text/html;charset=utf-8'});
@@ -4195,7 +4188,7 @@ function downloadHTMLSnapshot(){
   toast('HTML-файл для отправки создан');
 }
 
-function resetAllConfirm(){if(confirm('Сбросить все галочки, интересы и комментарии к начальному состоянию?')){['terraecoBitrixCRM_v24_closed_column_restored_once','terraecoBitrixCRM_v24_comments_notinterest','terraecoBitrixCRM_customLeads_v24_comments_notinterest','terraecoBitrixCRM_v20_all_leads_embedded','terraecoBitrixCRM_customLeads_v20_all_leads_embedded','terraecoBitrixCRM_v12_vasiliy_single','terraecoBitrixCRM_customLeads_v12_vasiliy_single','terraecoBitrixCRM_v10_dedup_links','terraecoBitrixCRM_customLeads_v10_dedup_links'].forEach(k=>localStorage.removeItem(k));customLeads=[];state=loadState();render();}}
+function resetAllConfirm(){if(confirm('Сбросить все галочки, интересы и комментарии к начальному состоянию?')){['terraecoBitrixCRM_v25_closed_column_restore_disabled','terraecoBitrixCRM_v25_balanced_linked_logic','terraecoBitrixCRM_customLeads_v25_balanced_linked_logic','terraecoBitrixCRM_v20_all_leads_embedded','terraecoBitrixCRM_customLeads_v20_all_leads_embedded','terraecoBitrixCRM_v12_vasiliy_single','terraecoBitrixCRM_customLeads_v12_vasiliy_single','terraecoBitrixCRM_v10_dedup_links','terraecoBitrixCRM_customLeads_v10_dedup_links'].forEach(k=>localStorage.removeItem(k));customLeads=[];state=loadState();render();}}
 function exportCSV(){
   const rows=[['Компания','Направление','Тип','Email','Телефон','Сайт','Написать','КП','Форма','Позвонить','Повтор','Интерес','Следующий звонок','Комментарий']];
   allLeads().forEach(l=>{const s=state[l.id];rows.push([l.company,l.direction,l.type,l.email,l.phone,l.site,s.tasks.write,s.tasks.kp,s.tasks.form,s.tasks.call,s.tasks.follow,s.interest,s.nextCall||'',s.comment]);});
